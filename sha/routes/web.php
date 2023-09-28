@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,4 +18,12 @@ Route::get('/', function () {
 Route::get('/sample', function () {
     return view('sample')->withName('swathi');
 });
+Route::get('/student',function () {
+    return view('student');
+});
+Route::post('/student', 'App\Http\Controllers\StudentController@insert')->name('insert');
+Route::get('/student', 'App\Http\Controllers\StudentController@select');
+Route::get('delete/{id}', 'App\Http\Controllers\StudentController@delete');
+Route::get('student.edit/{id}', 'App\Http\Controllers\StudentController@edit')->name('edit');
+Route::post('/edit', 'App\Http\Controllers\StudentController@update')->name('update');
 ?>
