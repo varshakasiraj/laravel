@@ -1,4 +1,14 @@
-</div class="studentform">
+
+<head>
+<script type="text/javascript" src="{{ asset('js/jquery-3.7.0.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}".>
+<link rel="stylesheet" href="{{ asset('css/header.css') }}".>
+@include('layout.student_header')
+</head>
+<body>
+<div class="studentform">
   <form action="{{ route('insert') }}" method="POST">
   @csrf
     <label for="fname">First name:</label><br>
@@ -12,31 +22,36 @@
     <input type="submit" value="Submit">
   </form> 
 </div>
+<div id="mytablecontatiner">
+<table class="table table-striped" id="mytable">
+</table>
 </div>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>FirstName</th>
-        <th>LasttName</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach($viewtable as $value)
-      <tr>
-        <td>{{ $value->id }}</td>
-        <td>{{ $value->firstname }}</td>
-        <td>{{ $value->lasttname }}</td>
-        <td>{{ $value->email }}</td>
-        <td>
-          <button type="button" onclick="window.location='student.edit/{{$value->id}}'">Edit</button>
-        </td>
-        <td>
-          <button type="button" onclick="window.location='delete/{{ $value->id }}'">Delete</button>
-        </td>
-      </tr>
-      @endforeach
-    </tbody>
-  </table>
-</div>
+</body>
+<footer>
+@include('layout.footer')
+</footer>
+<script  type="text/javascript">
+  var  viewtable = "{{$viewtable}}";
+  var postlist = JSON.parse(viewtable.replace(/&quot;/g,'"'));
+  $('#mytable').DataTable({
+      data:postlist,
+      columns: [
+         { data:'id',title:'Id'} ,
+         { data:'firstname',title:'Firstname' },
+         { data:'lasttname',title:'Lasttname' } ,
+         { data:'email',title:'Email' } ,
+         {defaultContent:'<button type="button" class="edit">Edit</button>',title:'edit'},
+         {defaultContent:'<button class="delete" >Delete</button>',title:'Delete'},
+      ],
+  }); 
+  $('.edit').click(function(){
+    $(this).closest('tr').find('td:eq(0)').map(function(){
+      window.location.href='student_edit/'+$(this).text() ;
+    });
+   });
+   $('.delete').click(function(){
+    $(this).closest('tr').find('td:eq(0)').map(function(){
+      window.location.href='delete/'+$(this).text() ;
+    });
+   });
+</script>
