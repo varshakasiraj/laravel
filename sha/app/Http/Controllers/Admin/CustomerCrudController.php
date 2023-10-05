@@ -5,7 +5,10 @@ use App\Models\Customer;
 use App\Http\Requests\CustomerRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-
+use Backpack\CRUD\app\Library\Widget;
+use App\Models\customerAddress;
+use  Illuminate\Database\Eloquent;
+//use App\Http\Controllers\Admin\
 /**
  * Class CustomerCrudController
  * @package App\Http\Controllers\Admin
@@ -18,6 +21,7 @@ class CustomerCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -30,17 +34,20 @@ class CustomerCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/customer');
         CRUD::setEntityNameStrings('customer', 'customers');
         CRUD::operation('list', function() {
-            CRUD::column('name');
-            CRUD::column('email');
-            CRUD::column('age');
-            
+           
         });
         CRUD::operation(['create', 'update'], function() {
-        // CRUD::addValidation(CustomerRequest::class);
-        //CRUD::field('name');
         });
+          $this->crud->addField([
+            'label' => "address",
+            // 'model' =>customerAddress::class,
+            'name' => 'customer_id',
+            // 'entity' => 'structure',
+            // //'attribute' => 'customer_id', 
+        ]);
+       
     }
-
+    
     /**
      * Define what happens when the List operation is loaded.
      * 
@@ -50,6 +57,21 @@ class CustomerCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::setFromDb(); // set columns from db columns.
+        $customer_count = Customer::count();
+         Widget::add()->to('before_content')->type('div')->class('row')->content([
+            Widget::make(
+                [
+                    'type'       => 'card',
+                    'class'   => 'customer_card',
+                    'wrapper' => ['class' => 'customer_card_container'],
+                    'content'    => [
+                        'header' => 'Number of customer : ' .$customer_count,
+                    ]
+                ]
+            ),
+         ]
+        );
+        Widget::add()->type('style')->stack('after_styles')->content('http://127.0.0.1:8000/css/customer.css');
 
         /**
          * Columns can be defined using the fluent syntax:
@@ -76,6 +98,7 @@ class CustomerCrudController extends CrudController
             'name.min' => 'You came up short. Try more than 3 characters.',
         ];
         $this->crud->setValidation($rules, $messages);
+      
         /**
          * Fields can be defined using the fluent syntax:
          * - CRUD::field('price')->type('number');
@@ -92,8 +115,21 @@ class CustomerCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
-    protected function index(){
-        $posts = 'hi';
-        return view('vendor.backpack.crud.list', compact('posts'));
-    }
+    // public function index()
+    // {
+    //     $this->crud->hasAccessOrFail('list');
+    
+    //     $this->data['address'] = customerAddress::select('address')->get();
+    //    // $this->data['title'] = ucfirst($this->crud->entity_name_plural);
+    
+    //     // get all entries if AJAX is not enabled
+    //     // if (! $this->data['address']->ajaxTable()) {
+    //     //   $this->data['entries'] = $this->data['address'];
+    //     // }
+    // //   var_dump($this->crud->getListView());
+    // //   die();
+    //     // load the view from /resources/views/vendor/backpack/crud/ if it exists, otherwise load the one in the package
+    //     // $this->crud->getListView() returns 'list' by default, or 'list_ajax' if ajax was enabled
+    //     return view('vendor.backpack.crud.list',  $this->data);
+    // }
 }
