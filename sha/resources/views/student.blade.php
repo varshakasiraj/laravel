@@ -40,8 +40,18 @@
          { data:'firstname',title:'Firstname' },
          { data:'lasttname',title:'Lasttname' } ,
          { data:'email',title:'Email' } ,
-         {defaultContent:'<button value=>Edit</button>',title:'edit'}
+         {defaultContent:'<button type="button" class="edit">Edit</button>',title:'edit'},
+         {defaultContent:'<button class="delete" >Delete</button>',title:'Delete'},
       ],
   }); 
-  console.log($('#mytable').rows().data(id)); 
+  $('.edit').click(function(){
+    $(this).closest('tr').find('td:eq(0)').map(function(){
+      window.location.href='student_edit/'+$(this).text() ;
+    });
+   });
+   $('.delete').click(function(){
+    $(this).closest('tr').find('td:eq(0)').map(function(){
+      window.location.href='delete/'+$(this).text() ;
+    });
+   });
 </script>
