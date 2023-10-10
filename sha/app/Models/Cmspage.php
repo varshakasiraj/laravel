@@ -56,7 +56,9 @@ class Cmspage extends Model
     public function view(){
         return DB::table('cmspage')->get();
     }
+
     public function selectById($id){
         return DB::table('cmspage')->where('id',$id)->get();
     }
+
 }
