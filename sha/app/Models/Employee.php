@@ -1,23 +1,23 @@
 <?php
 
 namespace App\Models;
-
+use App\Traits\Uuid;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-class Cmspage extends Model
+
+class Employee extends Model
 {
     use CrudTrait;
     use HasFactory;
-
+    use Uuid;
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'cmspage';
+    protected $table = 'employees';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -53,12 +53,4 @@ class Cmspage extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-    public function view(){
-        return DB::table('cmspage')->get();
-    }
-
-    public function selectById($id){
-        return DB::table('cmspage')->where('id',$id)->get();
-    }
-
 }

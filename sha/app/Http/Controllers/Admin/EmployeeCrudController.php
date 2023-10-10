@@ -1,17 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Models\Cmspage;
-use App\Http\Requests\CmspageRequest;
+
+use App\Http\Requests\EmployeeRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class CmspageCrudController
+ * Class EmployeeCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class CmspageCrudController extends CrudController
+class EmployeeCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,19 +26,9 @@ class CmspageCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Cmspage::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/cmspage');
-        CRUD::setEntityNameStrings('cmspage', 'cmspages');
-        $this->crud->addField(
-            [
-                'lable'=>'image',
-                'name' => 'banner',
-                'type' => 'upload',
-                'withFiles' => [
-                    'path' => 'image',
-                ],
-            ],
-        );
+        CRUD::setModel(\App\Models\Employee::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/employee');
+        CRUD::setEntityNameStrings('employee', 'employees');
     }
 
     /**
@@ -50,7 +40,7 @@ class CmspageCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::setFromDb(); // set columns from db columns.
-        
+
         /**
          * Columns can be defined using the fluent syntax:
          * - CRUD::column('price')->type('number');
@@ -65,7 +55,7 @@ class CmspageCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CmspageRequest::class);
+        CRUD::setValidation(EmployeeRequest::class);
         CRUD::setFromDb(); // set fields from db columns.
 
         /**
@@ -83,16 +73,5 @@ class CmspageCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
-    }
-    protected function viewProduct(){
-        $Cmspage  = new Cmspage();
-        $viewProduct = $Cmspage->get();
-        //$viewProduct = json_decode($products);
-        return view('cms.cmspage',compact('viewProduct'));
-    }
-    protected function viewSingleProduct($id){
-        $Cmspage  = new Cmspage();
-        $viewProduct = $Cmspage->selectById($id);
-        return view('cms.singlepage',compact('viewProduct'));
     }
 }
