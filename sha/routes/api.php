@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,15 +16,13 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware([AuthController::class])->group(function () {
-    Route::get('/login', function () {
-        return view('login');
+
+Route::group(['prefix' => 'auth'], function () {
+    Route::get('/student_register', function () {
+        return view('student_register');
     });
-    Route::get('/student',function () {
-        return view('student');
-    });
+    Route::post('/student_register', 'App\Http\Controllers\AuthController@register')->name('student_register');
+
 });
 
-Route::controller(UserController::class)->group(function () {
-    Route::post('/user_login', 'getDetails');
-});
+
