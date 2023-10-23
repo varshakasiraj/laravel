@@ -23,15 +23,8 @@
     </div>
     <button type="submit" class="btn btn-primary">Sign in</button>
   </form>
-  <div class="error">
-    <?php
-     if(!empty($error)){
-      echo $error;
-     }
-    ?>
-  </div>
-  <div class="form">
-  <a class="" href="/student_register">New around here? Sign up</a><hr>
+
+  <!-- <div class="dropdown-divider"></div>
+  <a class="" href="#">New around here? Sign up</a>
   <a class="" href="#">Forgot password?</a>
-  <div>
-</div>
+</div> -->

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Student;
-use App\Models\User;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 class StudentController extends Controller
@@ -16,7 +16,8 @@ class StudentController extends Controller
         $student = new Student();
         $firstname = $request->input('fname');
         $lasttname = $request->input('lname');
-        $email = $request->input('email');
+        //$request->validate();
+        $email =  $request->input('email');
         $password = $request->input('password');
         $student->insert($firstname,$lasttname, $email,$password);
         return view('/student');
@@ -24,13 +25,17 @@ class StudentController extends Controller
     public function select():View
     {
         $student = new Student();
-        $view = $student->view() ;
-        return view('student')->with(array('viewtable'=> $view));
+       
+        $view=$student->view();
+        $viewtable= json_encode($view);
+        return view('student',compact('viewtable'));
     }
     public function delete($id){
         $student = new Student();
         $delete_id = [$id];
+       
         $student->remove($delete_id) ;
+        echo "Deleted Successfully";
     }
     public function edit($id){
         $student = new Student();
