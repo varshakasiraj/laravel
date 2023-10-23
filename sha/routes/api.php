@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,18 +16,13 @@ use App\Http\Controllers\AuthController;
 |
 */
 
+
 Route::group(['prefix' => 'auth'], function () {
     Route::get('/student_register', function () {
         return view('student_register');
     });
     Route::post('/student_register', 'App\Http\Controllers\AuthController@register')->name('student_register');
-    Route::get('/login', 'App\Http\Controllers\AuthController@getlogin')->name('login');
-    // Route::post('login', [AuthController::class, 'login']);
-    // Route::post('register', [AuthController::class, 'register']);
 
-    // Route::group(['middleware' => 'auth:sanctum'], function() {
-    //   Route::get('logout', [AuthController::class, 'logout']);
-    //   Route::get('user', [AuthController::class, 'user']);
-    // });
 });
+
 
