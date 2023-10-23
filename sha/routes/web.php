@@ -33,4 +33,5 @@ Route::get('cms','App\Http\Controllers\Admin\CmspageCrudController@viewProduct')
 Route::get('cms-single/{id}','App\Http\Controllers\Admin\CmspageCrudController@viewSingleProduct');
 Route::post('/student_register', 'App\Http\Controllers\AuthController@register')->name('student_register');
 Route::post('/login', 'App\Http\Controllers\AuthController@getlogin')->name('login');
+
 ?>
