@@ -1,0 +1,56 @@
+.nav{
+    background-color: black;
+    height: 50px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+a{
+    color: white;
+    text-transform: uppercase;
+}
+.footer {
+    position: fixed;
+    
+  }
+.footer_paragraph{
+    text-align: center ;
+    
+}
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color:#571E72;
+    color: white;
+    text-align: center;
+    height: 70px;
+ }
+ .username{
+    float: right;
+    color: red;
+    
+ }
+ li{
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 8px 12px;
+  text-decoration: none;
+ }
+ ul{
+    list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333
+ }
+ li a:hover {
+    background-color: #111;
+  }
+  .avatar {
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
